@@ -2,22 +2,51 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trafik Saveurs - نظام تسيير تجارة الحلويات</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#2D160E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Trafik Saveurs">
+<meta name="application-name" content="Trafik Saveurs">
+<meta name="format-detection" content="telephone=no">
+<title>Trafik Saveurs - تطبيق إدارة تجارة الحلويات والبسكويت</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="rtl">
 
-<div class="header">
+<!-- الرأس العلوي للتطبيق -->
+<header class="header">
   <div class="header-left">
-    <h1>🍪 <span data-t="app_name">Trafik Saveurs</span></h1>
-    <div class="sub" data-t="app_sub">نظام تسيير تجارة الحلويات والبسكويت بالجملة</div>
+    <div class="app-brand">
+      <img src="icons/icon.svg" alt="Trafik Saveurs Logo" class="app-logo-badge">
+      <div>
+        <h1><span data-t="app_name">Trafik Saveurs</span></h1>
+        <div class="sub" data-t="app_sub">نظام تسيير تجارة الحلويات والبسكويت بالجملة</div>
+      </div>
+    </div>
   </div>
+  
   <div class="header-right">
+    <!-- مؤشر حالة الاتصال -->
+    <div class="status-indicator" id="networkStatus" title="حالة الاتصال">
+      <span class="status-dot online" id="statusDot"></span>
+      <span class="status-text" id="statusText">متصل</span>
+    </div>
+
+    <!-- الساعة الرقمية والتناظرية -->
     <div class="clock-container">
-      <svg class="clock-svg" width="55" height="55" viewBox="0 0 100 100">
-        <defs><radialGradient id="clockGrad"><stop offset="0%" stop-color="#fff8e0"/>
-          <stop offset="100%" stop-color="#f5e8cf"/></radialGradient></defs>
+      <svg class="clock-svg" width="48" height="48" viewBox="0 0 100 100">
+        <defs>
+          <radialGradient id="clockGrad"><stop offset="0%" stop-color="#fff8e0"/><stop offset="100%" stop-color="#f5e8cf"/></radialGradient>
+        </defs>
         <circle cx="50" cy="50" r="46" fill="url(#clockGrad)" stroke="#FFC52E" stroke-width="3"/>
         <circle cx="50" cy="50" r="42" fill="none" stroke="#E9A900" stroke-width="1" opacity="0.5"/>
         <line id="hourHand" x1="50" y1="50" x2="50" y2="28" stroke="#3B1B12" stroke-width="4" stroke-linecap="round"/>
@@ -26,22 +55,106 @@
         <circle cx="50" cy="50" r="3.5" fill="#3B1B12"/>
         <circle cx="50" cy="50" r="1.5" fill="#FFC52E"/>
       </svg>
-      <div>
+      <div class="clock-info">
         <div class="clock-time" id="clockTime">--:--:--</div>
         <div class="clock-date" id="clockDate">--</div>
       </div>
     </div>
-    <button class="lang-btn" onclick="toggleLang()">
+
+    <!-- زر تثبيت التطبيق على أندرويد -->
+    <button class="btn-install-header" id="headerInstallBtn" onclick="triggerAndroidInstall()" title="تثبيت التطبيق على جهاز أندرويد">
+      <span class="android-icon">🤖</span>
+      <span class="install-text" data-t="install_app_btn">تثبيت التطبيق</span>
+    </button>
+
+    <!-- زر تغيير اللغة -->
+    <button class="lang-btn" onclick="toggleLang()" aria-label="تغيير اللغة">
       <span id="langFlag">🇫🇷</span>
       <span id="langLabel">Français</span>
     </button>
   </div>
+</header>
+
+<!-- شريط التنقل لسطح المكتب والأجهزة اللوحية -->
+<nav class="nav" id="navBar"></nav>
+
+<!-- بانر تثبيت تطبيق أندرويد القابل للإغلاق -->
+<div class="android-banner" id="androidInstallBanner" style="display:none;">
+  <div class="android-banner-content">
+    <div class="banner-icon-box">
+      <img src="icons/icon-192.png" alt="App Icon" class="banner-app-icon">
+    </div>
+    <div class="banner-text">
+      <strong id="bannerTitle">تثبيت تطبيق Trafik Saveurs على أندرويد</strong>
+      <p id="bannerDesc">احصل على تجربة تطبيق أندرويد كامل وسريع مع ميزة استيراد الإكسل والعمل بدون إنترنت.</p>
+    </div>
+  </div>
+  <div class="banner-actions">
+    <button class="btn btn-sm btn-gold" onclick="triggerAndroidInstall()">📲 تثبيت الآن</button>
+    <button class="btn btn-sm btn-ghost" onclick="dismissInstallBanner()">لاحقاً</button>
+  </div>
 </div>
 
-<div class="nav" id="navBar"></div>
-<div class="content" id="content"></div>
-<div class="modal-bg" id="modalBg"><div class="modal" id="modalContent"></div></div>
+<!-- الحاوية الرئيسية للمحتوى -->
+<main class="content" id="content" role="main"></main>
 
+<!-- النوافذ المنبثقة -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- الزر العائم للإجراءات السريعة (Android FAB) -->
+<div class="fab-container" id="fabContainer">
+  <div class="fab-menu" id="fabMenu">
+    <button class="fab-item" onclick="quickAction('sale')" title="فاتورة جديدة">
+      <span class="fab-item-label">فاتورة جديدة</span>
+      <span class="fab-item-icon">💰</span>
+    </button>
+    <button class="fab-item" onclick="quickAction('product')" title="إضافة منتج">
+      <span class="fab-item-label">إضافة منتج</span>
+      <span class="fab-item-icon">📦</span>
+    </button>
+    <button class="fab-item" onclick="quickAction('excel')" title="استيراد إكسل">
+      <span class="fab-item-label">استيراد إكسل</span>
+      <span class="fab-item-icon">📥</span>
+    </button>
+    <button class="fab-item" onclick="quickAction('android')" title="تطبيق أندرويد">
+      <span class="fab-item-label">دليل أندرويد</span>
+      <span class="fab-item-icon">📱</span>
+    </button>
+  </div>
+  <button class="fab-btn" id="fabBtn" onclick="toggleFabMenu()" aria-label="إجراءات سريعة">
+    <span class="fab-icon" id="fabMainIcon">+</span>
+  </button>
+</div>
+
+<!-- شريط التنقل السفلي للهواتف الذكية (Android Bottom Navigation) -->
+<nav class="bottom-nav" id="bottomNav" aria-label="شريط التنقل السفلي">
+  <button class="bnav-item active" data-section="dashboard" onclick="showSection('dashboard')">
+    <span class="bnav-icon">📊</span>
+    <span class="bnav-label" data-t="nav.dashboard">الرئيسية</span>
+  </button>
+  <button class="bnav-item" data-section="products" onclick="showSection('products')">
+    <span class="bnav-icon">📦</span>
+    <span class="bnav-label" data-t="nav.products">المنتجات</span>
+  </button>
+  <button class="bnav-item" data-section="sales" onclick="showSection('sales')">
+    <span class="bnav-icon">💰</span>
+    <span class="bnav-label" data-t="nav.sales">المبيعات</span>
+  </button>
+  <button class="bnav-item highlight" data-section="excel_import" onclick="showSection('excel_import')">
+    <span class="bnav-icon">📥</span>
+    <span class="bnav-label" data-t="nav.excel_import">استيراد Excel</span>
+  </button>
+  <button class="bnav-item" data-section="more" onclick="openMoreMenu()">
+    <span class="bnav-icon">⚙️</span>
+    <span class="bnav-label" data-t="nav.more">المزيد</span>
+  </button>
+</nav>
+
+<!-- مكتبة معالجة ملفات الإكسل محلياً (SheetJS) -->
+<script src="xlsx.full.min.js"></script>
+<!-- السكربت البرمجي للتطبيق -->
 <script src="script.js"></script>
 </body>
 </html>

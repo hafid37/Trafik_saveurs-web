@@ -1,0 +1,65 @@
+{
+  "id": "/?source=pwa",
+  "name": "Trafik Saveurs - إدارة تجارة الحلويات",
+  "short_name": "Trafik Saveurs",
+  "description": "تطبيق أندرويد متكامل لإدارة تجارة الحلويات والبسكويت بالجملة، المخزون، الفواتير، واستيراد ملفات الإكسل",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#F7F3EA",
+  "theme_color": "#3B1B12",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["business", "finance", "productivity"],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "فاتورة بيع جديدة",
+      "short_name": "فاتورة",
+      "description": "إنشاء وطباعة فاتورة بيع جديدة",
+      "url": "./index.html#sales-new",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "استيراد ملفات إكسل",
+      "short_name": "استيراد إكسل",
+      "description": "جلب المنتجات والفواتير من ملفات Excel و CSV",
+      "url": "./index.html#excel-import",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "إدارة المنتجات والمخزون",
+      "short_name": "المنتجات",
+      "description": "عرض وتحديث المنتجات والمخزون",
+      "url": "./index.html#products",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
